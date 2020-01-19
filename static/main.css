@@ -1,7 +1,6 @@
 body {
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -9,12 +8,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color:  #666666;
+  background-color: #5f788a;
 }
-
-.site-header .navbar-nav .nav-link {
+.site-header.navbar-nav .nav-link {
   color: #cbd5db;
-  margin-bottom: 5rem;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -34,7 +31,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .article-title {
-    margin-top: 5rem;
   color: #444444;
 }
 
@@ -44,7 +40,6 @@ a.article-title:hover {
 }
 
 .article-content {
-    margin-top: 5rem;
   white-space: pre-line;
 }
 

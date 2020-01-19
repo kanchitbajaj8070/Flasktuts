@@ -1,7 +1,3 @@
-<!-- used to reduce redundancy
-we will create blocks
-child can inheret this and over ride it
--->
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,42 +9,51 @@ child can inheret this and over ride it
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-    {% if title %}
-        <title>Flask Blog - {{ title }}</title>
-    {% else %}
-        <title>Flask Blog</title>
-    {% endif %}
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">Flask Blog</a>
+       <nav class="navbar navbar-expand-md navbar-dark bg-steel static-top mb-10">
+        <div class="container mb-10">
+          <a class="navbar-brand  " href="/">Flask Blog</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="/">Home</a>
-              <a class="nav-item nav-link" href="/about">About</a>
+              <a class="nav-item nav-link" href="{{url_for('hello')}}">Home</a>
+              <a class="nav-item nav-link" href="{{url_for('contactus')}}">Contact Us</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="/login">Login</a>
-              <a class="nav-item nav-link" href="/register">Register</a>
+                {% if current_user.is_authenticated %}
+                 <a class="nav-item nav-link" href="{{url_for('new_post')}}">New Post</a>
+                <a class="nav-item nav-link" href="{{url_for('account')}}">Account</a>
+                 <a class="nav-item nav-link" href="{{url_for('logout')}}">Logout</a>
+
+                {% else %}
+                  <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
+                  <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+                {% endif %}
             </div>
           </div>
         </div>
       </nav>
-    </header>
+
     <main role="main" class="container">
       <div class="row">
-        <div class="col-md-8">
-          {% block content %}{% endblock %}
+        <div class="col-md-8 mt-20">
+            {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages%}
+            {% for category,message in messages %}
+            <div class="alert alert-{{category}}">
+                {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+                {% endwith %}
+          {% block content %} {% endblock %}
         </div>
         <div class="col-md-4">
-          <div class="content-section">
+          <div class="content-section mt-10">
             <h3>Our Sidebar</h3>
             <p class='text-muted'>You can put any information here you'd like.
               <ul class="list-group">
